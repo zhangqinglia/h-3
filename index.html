@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="./style.css"/>
+</head>
+<body>
+    <fieldset>
+        <legend>学生档案</legend>
+        <div class="main">
+            <ul id="skin">
+                <li title="红色" class="select" style="background:red;"></li>
+                <li title="紫色" class="select" style="background:purple;"></li>
+                <li title="粉色" class="select" style="background:pink;"></li>
+                <li title="黑色" class="select" style="background:black;"></li>
+                <li title="灰色" class="select" style="background:grey;"></li>
+                <li title="橙色" class="select" style="background:orange;"></li>
+            </ul>
+        </div>
+        <div id="change">
+            LocalStorage将数据保存在客户端本地的硬件设备中，即使浏览器被关闭了，该数据仍然存在，下次打开浏览器访问网站时仍然可以继续使用。
+        </div>
+    </fieldset>
+    <script>
+        var change = document.getElementById("change");
+        var list = document.getElementsByTagName("li");   
+        if (!window.localStorage) {
+            alert("你的浏览器不支持localstorage");
+        }
+        //从零开始
+        if(localStorage.pagecount){
+            localStorage.pagecount=Number(localStorage.pagecount)+1;
+        }
+        else{
+            localStorage.pagecount=1;
+        }
+
+        window.onload = function() {
+                var i = localStorage.getItem("color");
+                //console.log(i); //第一次没有录入color
+                list[i].className="selected";
+                change.style.backgroundColor = window.getComputedStyle(list[i], null).backgroundColor;
+        
+        }
+        for (var i = 0; i < list.length; ++i) {
+            list[i].onclick = function(i) {
+                for (var j = 0; j < list.length; j++) {
+                    if (j == this) {
+                        list[this].className="selected";
+                        localStorage.setItem("color", j);
+                        change.style.backgroundColor = window.getComputedStyle(list[j], null).backgroundColor;
+                    } else {
+                        list[j].className="select";
+                    }
+                }
+            }
+        }
+    
+    </script>
+</body>
+</html>
